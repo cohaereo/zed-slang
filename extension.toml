@@ -1,0 +1,15 @@
+id = "slang"
+name = "Slang"
+description = "Slang language support"
+version = "0.0.1"
+schema_version = 1
+authors = ["cohaereo <cohae@cohae.dev>"]
+repository = "https://github.com/cohaereo/zed-slang"
+
+[language_servers.slangd]
+name = "slangd"
+language = "Slang"
+
+[grammars.slang]
+repository = "https://github.com/tree-sitter-grammars/tree-sitter-slang"
+commit = "a4454e3004a9e8fea2df7fd2535fbaa05500da21"
