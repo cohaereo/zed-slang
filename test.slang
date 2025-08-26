@@ -189,3 +189,21 @@ struct VertexInput {
     float3 normal : NORMAL;       // Vertex normal in object space
     float2 texCoord : TEXCOORD0;  // Texture coordinates
 };
+
+struct ViewScope {
+    float4x4 worldToView;  // World -> View space transformation matrix, also known as a view matrix
+    float4x4 viewToNdc;    // View -> Normalized Device Coordinates (clip space) matrix, also known as a projection matrix
+    float4x4 worldToNdc;   // World -> Normalized Device Coordinates (clip space) matrix, also known as a view projection matrix
+
+    float4x4 viewToWorld;  // View -> World space transformation matrix, also known as an inverse view matrix
+    float4x4 ndcToView;    // Normalized Device Coordinates (clip space) -> View space matrix, also known as an inverse projection matrix
+    float4x4 ndcToWorld;   // Normalized Device Coordinates (clip space) -> World space matrix, also known as an inverse view projection matrix
+
+    float3 position;  // Camera position in world space
+};
+
+uniform ConstantBuffer<ViewScope> view;
+
+cbuffer view_scope {
+    public ViewScope view;
+};
