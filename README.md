@@ -2,6 +2,8 @@
 
 This extension provides LSP and syntax highlighting for the Slang shading language in the Zed editor.
 
+![Screenshot](screenshot.png)
+
 ## Installation
 
 Currently, this extension requires `slangd` to be installed and available in your PATH. The easiest way to do this is by installing the [LunarG Vulkan SDK](https://vulkan.lunarg.com/).
