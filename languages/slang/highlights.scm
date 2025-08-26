@@ -1,3 +1,4 @@
+;; Keywords
 [
   "if"
   "else"
@@ -9,112 +10,133 @@
   "default"
   "break"
   "continue"
-  "return"
+
+  "namespace"
+  "extension"
+  "interface"
+  "struct"
+  "class"
+
   "goto"
-  "do"
   "catch"
   "as"
   "throw"
+
+  "return"
   "import"
-  "namespace"
   "module"
   "uniform"
+
+  "as"
+  "is"
 ] @keyword
 
-
-(identifier) @variable
-; (field_identifier) @property
-(namespace_identifier) @namespace
-
-(comment) @comment
-(type_identifier) @type
-(primitive_type) @type
-
-(number_literal) @number
-(string_literal) @string
+(this) @keyword
 
 [
-  "struct"
-  "class"
-  "interface"
+  "property"
+  "get"
+  "set"
 ] @keyword
 
+;; Special methods
+[
+  "__init"
+  "__subscript"
+] @keyword
+
+;; Pre-processor directives
 [
   "#include"
   "#define"
-  "#if"
   "#ifdef"
   "#ifndef"
+  "#if"
   "#else"
   "#elif"
   "#endif"
-  (preproc_directive)
 ] @keyword
 
-[
-  (true)
-  (false)
-] @boolean
+(true) @boolean
+(false) @boolean
 
-[
-  ","
-  ":"
-  "::"
-  ";"
-  (raw_string_delimiter)
-] @punctuation.delimiter
+;; Types
+(primitive_type) @type.builtin
+(type_identifier) @type
+(placeholder_type_specifier) @type.placeholder
 
-[
-  "{"
-  "}"
-  "("
-  ")"
-  "["
-  "]"
-] @punctuation.bracket
+;; Literals
+(number_literal) @number
+(string_literal) @string
+(true) @boolean
+(false) @boolean
+(this) @variable.builtin
 
-[
-  "."
-  ".*"
-  "->*"
-  "~"
-  "-"
-  "--"
-  "-="
-  "->"
-  "="
-  "!"
-  "!="
-  "|"
-  "|="
-  "||"
-  "^"
-  "^="
-  "&"
-  "&="
-  "&&"
-  "+"
-  "++"
-  "+="
-  "*"
-  "*="
-  "/"
-  "/="
-  "%"
-  "%="
-  "<<"
-  "<<="
-  ">>"
-  ">>="
-  "<"
-  "=="
-  ">"
-  "<="
-  ">="
-  "<=>"
-  "||"
-  "?"
-] @operator
+;; Comments
+(comment) @comment
 
-(conditional_expression ":" @operator)
-(user_defined_literal (literal_suffix) @operator)
+;; Functions
+(function_declarator
+  declarator: (identifier) @function)
+
+(function_declarator
+  declarator: (field_identifier) @function)
+
+(template_function
+  name: (identifier) @function)
+
+(call_expression
+  function: (identifier) @function.call)
+
+(call_expression
+  function: (field_expression
+    field: (field_identifier) @function.method.call))
+
+(preproc_function_def
+  name: (identifier) @function.special)
+
+;; Variables
+;; (identifier) @variable
+;; (field_identifier) @property
+
+(type_hinted_declarator
+  (identifier) @variable)
+
+(init_declarator
+  declarator: (identifier) @variable)
+
+(parameter_declaration
+  declarator: (identifier) @variable.parameter)
+
+;; Structures / Interfaces / Extensions / Classes
+(struct_specifier name: (type_identifier) @type)
+(interface_specifier name: (type_identifier) @type)
+(extension_specifier name: (type_identifier) @type)
+(class_specifier name: (type_identifier) @type)
+
+(base_class_clause
+  (type_identifier) @type)
+
+;; Namespaces
+(namespace_identifier) @namespace
+
+;; Semantics
+(bitfield_clause (identifier) @type)
+(semantics (identifier) @type)
+
+;; Generics
+(interface_requirements
+  (identifier) @type)
+
+;; Operators
+(binary_expression operator: _ @operator)
+(assignment_expression operator: _ @operator)
+(update_expression operator: _ @operator)
+
+;; Properties
+;; (property_declaration (identifier) @property)
+;; (property_get) @keyword
+;; (property_set) @keyword
+
+[ "," "." ":" ";" "->" ] @punctuation.delimiter
+["(" ")" "[" "]" "{" "}"] @punctuation.bracket
