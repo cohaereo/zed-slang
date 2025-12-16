@@ -16,8 +16,8 @@ Example:
 {
   "lsp": {
     "slangd": {
-      "initialization_options": {
-        "additionalSearchPaths": ["./resources/shaders", "C:\\some\\library"]
+      "settings": {
+        "slang.additionalSearchPaths": ["./resources/shaders", "C:\\some\\library"]
       }
     }
   }
