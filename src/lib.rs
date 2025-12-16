@@ -1,15 +1,16 @@
 use zed_extension_api::{self as zed, Result, settings::LspSettings};
 
-struct SlangExtension {
-}
+struct SlangExtension;
 
 impl SlangExtension {
+    const LANGUAGE_SERVER_ID: &'static str = "slangd";
+
     fn lsp_binary_path(
         &mut self,
         _language_server_id: &zed_extension_api::LanguageServerId,
         worktree: &zed_extension_api::Worktree,
     ) -> Result<String> {
-        let binary_settings = LspSettings::for_worktree("slangd", worktree)
+        let binary_settings = LspSettings::for_worktree(Self::LANGUAGE_SERVER_ID, worktree)
             .ok()
             .and_then(|lsp_settings| lsp_settings.binary);
 
@@ -30,7 +31,7 @@ impl zed::Extension for SlangExtension {
     where
         Self: Sized,
     {
-        SlangExtension {  }
+        SlangExtension
     }
 
     fn language_server_command(
@@ -44,6 +45,18 @@ impl zed::Extension for SlangExtension {
             args: Default::default(),
             env: Default::default(),
         })
+    }
+
+    fn language_server_workspace_configuration(
+        &mut self,
+        language_server_id: &zed_extension_api::LanguageServerId,
+        worktree: &zed_extension_api::Worktree,
+    ) -> Result<Option<zed_extension_api::serde_json::Value>> {
+        if language_server_id.as_ref() != Self::LANGUAGE_SERVER_ID {
+            return Ok(None);
+        }
+
+        LspSettings::for_worktree(Self::LANGUAGE_SERVER_ID, worktree).map(|s| s.settings)
     }
 }
 
