@@ -1,7 +1,7 @@
 id = "slang"
 name = "Slang"
 description = "Slang shading language support"
-version = "0.0.1"
+version = "0.1.1"
 schema_version = 1
 authors = ["cohaereo <cohae@cohae.dev>"]
 repository = "https://github.com/cohaereo/zed-slang"
