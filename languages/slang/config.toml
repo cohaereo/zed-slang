@@ -1,7 +1,7 @@
 name = "Slang"
 code_fence_block_name = "slang"
 grammar = "slang"
-path_suffixes = ["slang"]
+path_suffixes = ["slang", "slangh"]
 line_comments = ["// ", "/// "]
 decrease_indent_patterns = [
   { pattern = "^\\s*\\{.*\\}?\\s*$", valid_after = ["if", "for", "while", "do", "switch", "else"] },
